@@ -58,11 +58,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="secrets.json" />
 	  <None Remove="secrets2.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="secrets2.json" />
+	  <EmbeddedResource Include="secrets.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,6 +73,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="MQTTnet" Version="4.3.6.1152" />
+		<PackageReference Include="MQTTnet.Extensions.ManagedClient" Version="4.3.6.1152" />
 		<PackageReference Include="MQTTnet.Extensions.Rpc" Version="4.3.6.1152" />
 		<PackageReference Include="MQTTnet.Extensions.WebSocket4Net" Version="4.3.6.1152" />
 		<PackageReference Include="Thingsboard.Net.Flurl" Version="3.5.1.5" />

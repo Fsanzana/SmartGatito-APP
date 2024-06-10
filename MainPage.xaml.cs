@@ -9,14 +9,16 @@ using Thingsboard.Net.Flurl.Options;
 using Thingsboard.Net.Flurl;
 using System.Net;
 using MQTTnet.Client;
+using MQTTnet.Extensions.ManagedClient;
 using MQTTnet.Packets;
 using MQTTnet.Protocol;
 using MQTTnet.Extensions.Rpc;
 using MQTTnet;
+using MQTTnet.Internal;
 
 namespace SmartGatito
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : ContentPage 
     {
         string status = "Modo: Automático";
         string waterData = "";
@@ -32,6 +34,7 @@ namespace SmartGatito
         string mqttPassword = "";
         private const string Namespace = "SmartGatito";
         private const string FileName = "secrets.json";
+        public Thread mqttListener;
         public MainPage()
         {  
 
@@ -53,13 +56,28 @@ namespace SmartGatito
         {
             await getJwtToken();
             await setMode(2);
-            Thread mqttListener = new Thread(new ThreadStart(getWaterCount));
+            mqttListener = new Thread(getWaterCount);
             mqttListener.Start();
-            mqttListener.Join();            
+            mqttListener.Join();
+            //threadRestart();
         }
 
       
-
+        public Task threadRestart()
+        {
+            while(true)
+            {
+                var threadState = mqttListener.IsAlive;
+                if (!threadState)
+                {
+                    Console.WriteLine("Thread is not running, restarting...");
+                    mqttListener = new Thread(new ThreadStart(getWaterCount));
+                    mqttListener.Start();
+                    mqttListener.Join();
+                }
+                Task.Delay(10000);
+            }
+        }
 
 
 
@@ -114,71 +132,99 @@ namespace SmartGatito
         }
 
         public async void getWaterCount()
-        {         
+        {
+            var subscribed = false;
             // Create a new MQTT client.
             var mqttFactory = new MqttFactory();
-            var mqttClient = mqttFactory.CreateMqttClient();
+            var mqttClient = mqttFactory.CreateManagedMqttClient();
 
             var mqttClientOptions = new MqttClientOptionsBuilder()
                    .WithClientId(mqttClientId)
                    .WithTcpServer(mqttServer, mqttPort)
                    .WithCredentials(mqttUsername, mqttPassword)
                    .Build();
-            
-            var connectResult = await mqttClient.ConnectAsync(mqttClientOptions);
-            Console.WriteLine(connectResult.ResultCode);
-            waterData = connectResult.ResultCode.ToString();
-            if (connectResult.ResultCode == MqttClientConnectResultCode.Success)
+            var connectResult = new MqttClientConnectResult();
+            try
             {
-                
-                Console.WriteLine("Connected to MQTT broker successfully.");
+                await mqttClient.StartAsync(new ManagedMqttClientOptionsBuilder()
+                    .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
+                    .WithClientOptions(mqttClientOptions)
+                    .Build());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+           
+            Console.WriteLine(connectResult.ResultCode);
+            try
+            {
+                if (connectResult.ResultCode == MqttClientConnectResultCode.Success)
+                {
+                    // Wait until the queue is fully processed.
+                    Console.WriteLine("Connected to MQTT broker successfully.");
+                    SpinWait.SpinUntil(() => mqttClient.PendingApplicationMessagesCount == 0, 10000);
 
-                // Subscribe to a topic
-                await mqttClient.SubscribeAsync("v1/devices/me/attributes");
+                    Console.WriteLine($"Pending messages = {mqttClient.PendingApplicationMessagesCount}");
+                    // Subscribe to a topic
+                    await mqttClient.SubscribeAsync("v1/devices/me/attributes");
 
-
-                // Callback function when a message is received
-                mqttClient.ApplicationMessageReceivedAsync += e =>
-                {               
-                    var message = Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment);
-                    Console.WriteLine(message);
-                    Device.BeginInvokeOnMainThread(() =>
+                    SpinWait.SpinUntil(() => subscribed, 1000);
+                    Console.WriteLine("Subscription properly done");
+                    // Callback function when a message is received
+                    mqttClient.ApplicationMessageReceivedAsync += e =>
                     {
+                        Console.WriteLine(e.AutoAcknowledge);
+                        var message = Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment);
+                        Console.WriteLine("Received message:");
+                        Console.WriteLine(message);
                         waterData = message;
-                        Console.WriteLine($"{waterCountLabel.Text}");
-                        if (waterData.Contains("agua")){
+                        if (waterData.Contains("agua"))
+                        {
                             waterData = waterData.Replace("{\"agua\":", "");
                             waterData = waterData.Replace("}", "");
-                            waterCount = waterCount+Int32.Parse(waterData);
-                            
-                            SemanticScreenReader.Announce(waterCountLabel.Text);
-                            if(waterCount != 1)
-                            {
-                                waterVeces.Text = "veces";
-                                SemanticScreenReader.Announce(waterVeces.Text);
-                            }
-                            else
-                            {
-                                waterVeces.Text = "vez";
-                                SemanticScreenReader.Announce(waterVeces.Text);
-                            }
-                            if(waterCount < 10)
-                            {                    
-                                waterCountLabel.Text = "0"+ waterCount.ToString();
-                                SemanticScreenReader.Announce(waterCountLabel.Text);
-                            }
-                            else
-                            {
-                                waterCountLabel.Text = waterCount.ToString();
-                            }
+                            waterCount = waterCount + Int32.Parse(waterData);
+                            string veceslabel = "";
+                            string countLabel = "";
+                        if (waterCount != 1)
+                        {
+                            veceslabel = "veces";
                         }
-                    });
-                    return Task.CompletedTask;
-                };
+                        else
+                        {
+                            veceslabel = "vez";
+                        }
+
+                        if (waterCount < 10)
+                        {
+                            countLabel = "0" + waterCount.ToString();
+                        }
+                        else
+                        {
+                            countLabel = waterCount.ToString();
+                        }
+                        Action updateLabels = () =>
+                        {
+                            waterVeces.Text = veceslabel;
+                            waterCountLabel.Text = countLabel;
+                            SemanticScreenReader.Announce(waterCountLabel.Text);
+                            SemanticScreenReader.Announce(waterVeces.Text);
+                        };
+                        Dispatcher.Dispatch(updateLabels);
+                      
+                        }
+                        
+                        return Task.CompletedTask;
+                    };
 
 
 
 
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
         public async Task getJwtToken()
