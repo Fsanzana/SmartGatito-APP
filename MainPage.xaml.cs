@@ -21,8 +21,6 @@ namespace SmartGatito
     public partial class MainPage : ContentPage 
     {
         string status = "Modo: Automático";
-        string waterData = "";
-        int waterCount = 0;
         string token = "";
         string username = "";
         string password = "";
@@ -34,7 +32,6 @@ namespace SmartGatito
         string mqttPassword = "";
         private const string Namespace = "SmartGatito";
         private const string FileName = "secrets.json";
-        public Thread mqttListener;
         public MainPage()
         {  
 
@@ -56,27 +53,12 @@ namespace SmartGatito
         {
             await getJwtToken();
             await setMode(2);
-            mqttListener = new Thread(getWaterCount);
+            var mqttListener = new Thread(getMqttMessage);
             mqttListener.Start();
             mqttListener.Join();
-            //threadRestart();
-        }
-
-      
-        public Task threadRestart()
-        {
-            while(true)
-            {
-                var threadState = mqttListener.IsAlive;
-                if (!threadState)
-                {
-                    Console.WriteLine("Thread is not running, restarting...");
-                    mqttListener = new Thread(new ThreadStart(getWaterCount));
-                    mqttListener.Start();
-                    mqttListener.Join();
-                }
-                Task.Delay(10000);
-            }
+            var loadVideoStream = new Thread(LoadVideoStream);
+            loadVideoStream.Start();
+            loadVideoStream.Join();
         }
 
 
@@ -125,13 +107,13 @@ namespace SmartGatito
             }
             catch (Exception e)
             {
-                waterData = e.ToString();
+                Console.WriteLine(e.Message);   
             }  
 
 
         }
 
-        public async void getWaterCount()
+        public async void getMqttMessage()
         {
             var subscribed = false;
             // Create a new MQTT client.
@@ -178,40 +160,63 @@ namespace SmartGatito
                         var message = Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment);
                         Console.WriteLine("Received message:");
                         Console.WriteLine(message);
-                        waterData = message;
-                        if (waterData.Contains("agua"))
+                        if (message.Contains("agua") || message.Contains("detectado"))
                         {
-                            waterData = waterData.Replace("{\"agua\":", "");
-                            waterData = waterData.Replace("}", "");
-                            waterCount = waterCount + Int32.Parse(waterData);
+                            var key = "";
+                            int value = 0;
+                            if(message.Contains("detectado"))
+                            {
+                                key = "detectado";
+                                message = message.Replace("{\"detectado\":", "");
+                                message = message.Replace("}", "");
+                            }
+                            else
+                            {
+                                key = "agua";
+                                message = message.Replace("{\"agua\":", "");
+                                message = message.Replace("}", "");
+                            }
+                            value = value + Int32.Parse(message);
                             string veceslabel = "";
                             string countLabel = "";
-                        if (waterCount != 1)
-                        {
-                            veceslabel = "veces";
-                        }
-                        else
-                        {
-                            veceslabel = "vez";
-                        }
+                            if (value != 1)
+                            {
+                                veceslabel = "veces";
+                            }
+                            else
+                            {
+                                veceslabel = "vez";
+                            }
 
-                        if (waterCount < 10)
-                        {
-                            countLabel = "0" + waterCount.ToString();
-                        }
-                        else
-                        {
-                            countLabel = waterCount.ToString();
-                        }
-                        Action updateLabels = () =>
-                        {
-                            waterVeces.Text = veceslabel;
-                            waterCountLabel.Text = countLabel;
-                            SemanticScreenReader.Announce(waterCountLabel.Text);
-                            SemanticScreenReader.Announce(waterVeces.Text);
-                        };
-                        Dispatcher.Dispatch(updateLabels);
-                      
+                            if (value < 10)
+                            {
+                                countLabel = "0" + value.ToString();
+                            }
+                            else
+                            {
+                                countLabel = value.ToString();
+                            }
+                            if (key == "agua")
+                            {
+                                Action updateLabels = () =>
+                                {
+                                    waterVeces.Text = veceslabel;
+                                    waterCountLabel.Text = countLabel;
+                                    SemanticScreenReader.Announce(waterCountLabel.Text);
+                                    SemanticScreenReader.Announce(waterVeces.Text);
+                                };
+                                Dispatcher.Dispatch(updateLabels);
+                            }else if(key == "detectado")
+                            {
+                                Action updateLabels = () =>
+                                {
+                                    detectVeces.Text = veceslabel;
+                                    detectCountLabel.Text = countLabel;
+                                    SemanticScreenReader.Announce(detectCountLabel.Text);
+                                    SemanticScreenReader.Announce(detectVeces.Text);
+                                };
+                                Dispatcher.Dispatch(updateLabels);
+                            }
                         }
                         
                         return Task.CompletedTask;
@@ -248,13 +253,33 @@ namespace SmartGatito
             }
             catch(Exception e)
             {
-                waterData = e.Message;
+                Console.WriteLine(e.Message);
             }
+
+
             
         }
 
 
-
+        private void LoadVideoStream()
+        {
+            var videoStreamUrl = "http://192.168.1.126:5000/video";
+            Action getStream = () =>
+            {
+                videoWebView.Source = new HtmlWebViewSource
+                {
+                    Html = $@"
+                <html>
+                <body style='margin:0;padding:0;'>
+                    <img src='{videoStreamUrl}' style='width:100%;height:auto;' />
+                </body>
+                </html>"
+                };
+            };
+            Dispatcher.Dispatch(getStream);
+        }
+        
+        
 
 
     }  

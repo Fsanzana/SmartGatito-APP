@@ -3,158 +3,185 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartGatito.MainPage">
    
-    <Grid>
+    <Grid HorizontalOptions="Center">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="160" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="510" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="180" />
+            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="225" />
         </Grid.ColumnDefinitions>
         <!-- Water Count -->
-        <Frame
-        Margin="10"
-        Grid.Column="0"    
-        Grid.Row="0"
-        BackgroundColor="#D9D9D9"
-        Opacity="0.3"
-        WidthRequest="165"
-        HeightRequest="100"
-        CornerRadius="8">
-            
-        </Frame>
-        <AbsoluteLayout
+        <FlexLayout
             Grid.Column="0"    
-            Grid.Row="0">
+            Grid.Row="0"
+            Direction="Row"
+            Margin="0"
+            AlignItems="Start"
+            MinimumWidthRequest="170">
             <Frame
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.14,0.28,AutoSize,AutoSize"
+                Margin="10"
+                BackgroundColor="#666666"
+                Opacity="1"
+                MinimumWidthRequest="220"
+                MinimumHeightRequest="114"
+                CornerRadius="8">
+                <StackLayout>
+                    <Label
+                        FontAttributes="Bold"
+                        x:Name="waterVeces"
+                        Text="veces"
+                        Style="{StaticResource SubHeadline}"
+                        Margin="70,32,0,0"
+                        VerticalTextAlignment="End"
+                        HorizontalTextAlignment="End"
+                        SemanticProperties.HeadingLevel="Level2"
+                        FontSize="16"
+                        SemanticProperties.Description="Water detection label" />
+                    <Label
+                        Text="Su gato hoy ha tomado agua:"
+                        Style="{StaticResource SubHeadline}"
+                        SemanticProperties.HeadingLevel="Level2"
+                        FontAttributes="Bold"
+                        Margin="10,5,20,0"
+                        VerticalTextAlignment="End"
+                        HorizontalTextAlignment="Start"
+                        FontSize="10"
+                        SemanticProperties.Description="Water detection label" />
+                </StackLayout>
+            </Frame>
+        </FlexLayout>
+        <FlexLayout
+            Grid.Column="0"    
+            Grid.Row="0"
+            Direction="Row"
+            Margin="33,32,0,0"
+            AlignItems="Stretch"
+            MinimumWidthRequest="170">
+            <Frame                
                 BackgroundColor="#D9D9D9"
                 WidthRequest="60"
                 HeightRequest="60"
                 CornerRadius="120"
-                SemanticProperties.Description="Round Water icon">
+                SemanticProperties.Description="Round Detection icon">
             </Frame>
-        </AbsoluteLayout>
-        <AbsoluteLayout
+        </FlexLayout>
+        <FlexLayout
             Grid.Column="0"    
-            Grid.Row="0">
+            Grid.Row="0"
+            Direction="Row"
+            JustifyContent="Center"
+            Margin="70,40,0,0"
+            AlignItems="Stretch"
+            MinimumWidthRequest="150">
             <Label
-              AbsoluteLayout.LayoutFlags="PositionProportional"
-              AbsoluteLayout.LayoutBounds="0.566,0.34,AutoSize,AutoSize"
-              FontSize="27"  
+              FontSize="25"  
               x:Name="waterCountLabel"
               Text="00"
               FontAttributes="Bold"
               Style="{StaticResource SubHeadline}"
               SemanticProperties.HeadingLevel="Level2"
-              SemanticProperties.Description="Water count" />
-        </AbsoluteLayout>
-        <AbsoluteLayout
-            Grid.Column="0"    
-            Grid.Row="0">
-            <Label
-              AbsoluteLayout.LayoutFlags="PositionProportional"
-              AbsoluteLayout.LayoutBounds="0.88,0.38,AutoSize,AutoSize"
-              FontAttributes="Bold"
-              x:Name="waterVeces"
-              Text="veces"
-              Style="{StaticResource SubHeadline}"
-              SemanticProperties.HeadingLevel="Level2"
-              FontSize="16"
-              SemanticProperties.Description="Water count" />
-        </AbsoluteLayout>
-        <AbsoluteLayout
-            Grid.Column="0"    
-            Grid.Row="0">
-            <Label
-              AbsoluteLayout.LayoutFlags="PositionProportional"
-              AbsoluteLayout.LayoutBounds="0.2,0.84,AutoSize,AutoSize"
-              Text="Su gato hoy ha bebido:"
-              Style="{StaticResource SubHeadline}"
-              SemanticProperties.HeadingLevel="Level2"
-              FontAttributes="Bold"
-              FontSize="10"
-              SemanticProperties.Description="Water count" />
-        </AbsoluteLayout>
+              SemanticProperties.Description="Water detection number" />
+        </FlexLayout>
         <!-- Detection Count -->
-        <Frame
-        Grid.Column="0"    
-        Grid.Row="1"
-        BackgroundColor="#D9D9D9"
-        Opacity="0.3"
-        WidthRequest="165"
-        HeightRequest="100"
-        CornerRadius="8">
-
-        </Frame>
-        <AbsoluteLayout 
-            Grid.Column="0"    
-            Grid.Row="1">
+        <FlexLayout
+            Grid.Column="1"    
+            Grid.Row="0"
+            Direction="Row"
+            Margin="0"
+            AlignItems="Start"
+            MinimumWidthRequest="170">
             <Frame
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.14,0.05,AutoSize,AutoSize"
-                BackgroundColor="#D9D9D9"   
+                Margin="10"
+                BackgroundColor="#666666"
+                Opacity="1"
+                MinimumWidthRequest="220"
+                MinimumHeightRequest="114"
+                CornerRadius="8">
+                <StackLayout>
+                    <Label
+                      FontAttributes="Bold"
+                      x:Name="detectVeces"
+                      Text="veces"
+                      Style="{StaticResource SubHeadline}"
+                      Margin="70,32,0,0"
+                      VerticalTextAlignment="End"
+                      HorizontalTextAlignment="End"
+                      SemanticProperties.HeadingLevel="Level2"
+                      FontSize="16"
+                      SemanticProperties.Description="Water detection label" />
+                    <Label
+                        Text="Su gato hoy ha sido detectado:"
+                        Style="{StaticResource SubHeadline}"
+                        SemanticProperties.HeadingLevel="Level2"
+                        FontAttributes="Bold"
+                        Margin="10,5,20,0"
+                        VerticalTextAlignment="End"
+                        HorizontalTextAlignment="Start"
+                        FontSize="10"
+                        SemanticProperties.Description="Water detection label" />
+                </StackLayout>
+            </Frame>
+        </FlexLayout>
+        <FlexLayout
+            Grid.Column="1"    
+            Grid.Row="0"
+            Direction="Row"
+            Margin="33,32,0,0"
+            AlignItems="Stretch"
+            MinimumWidthRequest="170">
+             <Frame                
+                BackgroundColor="#D9D9D9"
                 WidthRequest="60"
                 HeightRequest="60"
                 CornerRadius="120"
-                SemanticProperties.Description="Round Detection icon">  
-            </Frame>
-        </AbsoluteLayout>
-        <AbsoluteLayout 
-            Grid.Column="0"    
-            Grid.Row="1">
-            <Label
-              AbsoluteLayout.LayoutFlags="PositionProportional"
-              AbsoluteLayout.LayoutBounds="0.566,0.34,AutoSize,AutoSize"
-              FontSize="27"
-              Text="00"
+                SemanticProperties.Description="Round Detection icon">
+             </Frame>
+         </FlexLayout>
+         <FlexLayout
+            Grid.Column="1"    
+            Grid.Row="0"
+            Direction="Row"
+            JustifyContent="Center"
+            Margin="70,40,0,0"
+            AlignItems="Stretch"
+            MinimumWidthRequest="150">
+             <Label
+              FontSize="25"  
               x:Name="detectCountLabel"
+              Text="00"
               FontAttributes="Bold"
               Style="{StaticResource SubHeadline}"
               SemanticProperties.HeadingLevel="Level2"
-              SemanticProperties.Description="Detection count" />
-            </AbsoluteLayout>
-        <AbsoluteLayout 
-            Grid.Column="0"    
-            Grid.Row="1">
-                <Label
-                  AbsoluteLayout.LayoutFlags="PositionProportional"
-                  AbsoluteLayout.LayoutBounds="0.88,0.38,AutoSize,AutoSize"
-                  FontAttributes="Bold"
-                  Text="veces"
-                  x:Name="detectVeces"
-                  Style="{StaticResource SubHeadline}"
-                  SemanticProperties.HeadingLevel="Level2"
-                  FontSize="16"
-                  SemanticProperties.Description="Detection count" />
-        </AbsoluteLayout>
-        <AbsoluteLayout 
-            Grid.Column="0"    
-            Grid.Row="1">
-            <Label
-              AbsoluteLayout.LayoutFlags="PositionProportional"
-              AbsoluteLayout.LayoutBounds="0.26,0.84,AutoSize,AutoSize"  
-              Text="Su gato ha sido detectado:"
-              Style="{StaticResource SubHeadline}"
-              SemanticProperties.HeadingLevel="Level2"
-              FontAttributes="Bold"
-              FontSize="10"
-              SemanticProperties.Description="Detection count" />
-        </AbsoluteLayout>
-        
-        
-    
+              SemanticProperties.Description="Water detection number" />
+        </FlexLayout>
+
+
+        <!-- Video Stream -->
+        <FlexLayout 
+            Grid.ColumnSpan="2"    
+            Grid.RowSpan="2"
+            Grid.Row="1"
+            Direction="Row"
+            JustifyContent="SpaceEvenly"
+            Margin="70"
+            MinimumWidthRequest="470">
+                <WebView x:Name="videoWebView" WidthRequest="416" HeightRequest="312"/>
+        </FlexLayout>
         <!-- Mode Switch Icons -->
-        <AbsoluteLayout 
-        Grid.ColumnSpan="3"    
-        Grid.Row="4">
+        <FlexLayout 
+        Grid.ColumnSpan="2"    
+        Grid.Row="5"
+        Direction="Row"
+        JustifyContent="SpaceEvenly"
+        Margin="0"
+        MinimumWidthRequest="470">
             <Button
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.15,0.05,AutoSize,AutoSize"
                 BackgroundColor="#AAAAAA"   
                 Opacity="0.6"
                 x:Name="modeOn"
@@ -167,8 +194,6 @@
                 TextColor="White">
             </Button>
             <Button
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.5,0.05,AutoSize,AutoSize"
                 BackgroundColor="#20EE20"   
                 Opacity="0.6"
                 x:Name="modeAuto"
@@ -181,8 +206,6 @@
                 TextColor="White">
             </Button>
             <Button
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.85,0.05,AutoSize,AutoSize"
                 BackgroundColor="#AAAAAA"   
                 Opacity="0.6"
                 x:Name="modeOff"
@@ -194,7 +217,7 @@
                 Text="Off"
                 TextColor="White">
             </Button>
-        </AbsoluteLayout>
+        </FlexLayout>
     </Grid>
 </ContentPage>
 
