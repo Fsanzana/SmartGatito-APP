@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SmartGatito.Helpers;
-using Thingsboard.Net.Flurl.Options;
-using Thingsboard.Net.Flurl;
 using System.Net;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
@@ -15,6 +13,7 @@ using MQTTnet.Protocol;
 using MQTTnet.Extensions.Rpc;
 using MQTTnet;
 using MQTTnet.Internal;
+using Microsoft.Maui.Controls;
 
 namespace SmartGatito
 {
@@ -32,6 +31,9 @@ namespace SmartGatito
         string mqttPassword = "";
         private const string Namespace = "SmartGatito";
         private const string FileName = "secrets.json";
+        private bool cancelThread = false;
+        private Thread loadVideoStream;
+
         public MainPage()
         {  
 
@@ -47,17 +49,24 @@ namespace SmartGatito
             mqttClientId = config.GetSection("broker:clientId").Value;
             mqttUsername = config.GetSection("broker:username").Value;
             mqttPassword = config.GetSection("broker:password").Value;
-            
+            getJwtToken();
+            setMode(2);
         }
         protected async override void OnAppearing()
         {
-            await getJwtToken();
-            await setMode(2);
+            cancelThread = false;
+            base.OnAppearing();
             var mqttListener = new Thread(getMqttMessage);
             mqttListener.Start();
             mqttListener.Join();
-            var loadVideoStream = new Thread(LoadVideoStream);
-            loadVideoStream.Start();
+            loadVideoStream = new Thread(LoadVideoStream);
+            loadVideoStream.Start();            
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            cancelThread = true;
             loadVideoStream.Join();
         }
 
@@ -65,32 +74,23 @@ namespace SmartGatito
 
         private async void OnMode(object sender, EventArgs e)
         {
-            modeOn.BackgroundColor = Color.FromHex("#20EE20");
-            modeOn.Opacity = 0.6;
+            modeOn.BackgroundColor = Color.FromHex("#00AA00");
             modeAuto.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeAuto.Opacity = 0.6;
             modeOff.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeOff.Opacity = 0.6;
             await setMode(1);
         }
         private async void AutoMode(object sender, EventArgs e)
         {
-            modeAuto.BackgroundColor = Color.FromHex("#20EE20");
-            modeAuto.Opacity = 0.6;
+            modeAuto.BackgroundColor = Color.FromHex("#00AA00");
             modeOn.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeOn.Opacity = 0.6;
             modeOff.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeOff.Opacity = 0.6;
             await setMode(2);
         }
         private async void OffMode(object sender, EventArgs e)
         {
-            modeOff.BackgroundColor = Color.FromHex("#20EE20");
-            modeOff.Opacity = 0.6;
+            modeOff.BackgroundColor = Color.FromHex("#00AA00");
             modeAuto.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeAuto.Opacity = 0.6;
             modeOn.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeOn.Opacity = 0.6;
             await setMode(3);
         }
 
@@ -264,22 +264,48 @@ namespace SmartGatito
         private void LoadVideoStream()
         {
             var videoStreamUrl = "http://192.168.1.126:5000/video";
-            Action getStream = () =>
-            {
-                videoWebView.Source = new HtmlWebViewSource
+            try {
+                if (!cancelThread)
                 {
-                    Html = $@"
-                <html>
-                <body style='margin:0;padding:0;'>
-                    <img src='{videoStreamUrl}' style='width:100%;height:auto;' />
-                </body>
-                </html>"
-                };
-            };
-            Dispatcher.Dispatch(getStream);
+                    Action getStream = () =>
+                    {
+                        Console.WriteLine("Loading video stream");
+                        videoWebView.Source = new HtmlWebViewSource
+                        {
+                            Html = $@"
+                    <html>
+                    <body style='margin:0;padding:0;'>
+                        <img src='{videoStreamUrl}' style='width:100%;height:auto;' />
+                    </body>
+                    </html>"
+                        };
+                    };
+                    Dispatcher.Dispatch(getStream);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
-        
-        
+
+        private void OnWebViewNavigating(object sender, WebNavigatingEventArgs e)
+        {
+            // Mostrar el ActivityIndicator cuando el WebView comienza a navegar
+            
+                activityIndicator.IsVisible = true;
+                activityIndicator.IsRunning = true;
+        }
+
+        private void OnWebViewNavigated(object sender, WebNavigatedEventArgs e)
+        {
+            // Ocultar el ActivityIndicator cuando el WebView ha terminado de cargar
+            activityIndicator.IsVisible = false;
+            activityIndicator.IsRunning = false;
+        }
+
+
 
 
     }  

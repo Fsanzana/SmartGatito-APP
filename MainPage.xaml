@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartGatito.Views;assembly=SmartGatito"
              x:Class="SmartGatito.MainPage">
    
     <Grid HorizontalOptions="Center">
         <Grid.RowDefinitions>
-            <RowDefinition Height="160" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="240" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="225" />
-            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <!-- Water Count -->
         <FlexLayout
@@ -23,45 +21,159 @@
             Direction="Row"
             Margin="0"
             AlignItems="Start"
-            MinimumWidthRequest="170">
+            JustifyContent="Center"
+            MinimumWidthRequest="170"
+            MinimumHeightRequest="190">
             <Frame
-                Margin="10"
+                Margin="5,10,2,0"
                 BackgroundColor="#666666"
                 Opacity="1"
-                MinimumWidthRequest="220"
-                MinimumHeightRequest="114"
+                MinimumWidthRequest="225"
+                MinimumHeightRequest="180"
                 CornerRadius="8">
-                <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
                     <Label
+                         Grid.Row="1"
+                         Grid.ColumnSpan="2"
+                         Text="Su gato hoy ha tomado agua:"
+                         Style="{StaticResource SubHeadline}"
+                         SemanticProperties.HeadingLevel="Level2"
+                         FontAttributes="Bold"
+                         Margin="2,0,2,4"
+                         VerticalTextAlignment="End"
+                         HorizontalTextAlignment="Start"
+                         FontSize="9"
+                         SemanticProperties.Description="Water detection label" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
                         FontAttributes="Bold"
                         x:Name="waterVeces"
                         Text="veces"
                         Style="{StaticResource SubHeadline}"
-                        Margin="70,32,0,0"
-                        VerticalTextAlignment="End"
-                        HorizontalTextAlignment="End"
+                        Margin="0,10,0,0"
                         SemanticProperties.HeadingLevel="Level2"
                         FontSize="16"
                         SemanticProperties.Description="Water detection label" />
                     <Label
-                        Text="Su gato hoy ha tomado agua:"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontSize="25"  
+                        x:Name="waterCountLabel"
+                        Text="00"
+                        FontAttributes="Bold"
+                        Margin="0,0,0,0"
                         Style="{StaticResource SubHeadline}"
                         SemanticProperties.HeadingLevel="Level2"
-                        FontAttributes="Bold"
-                        Margin="10,5,20,0"
-                        VerticalTextAlignment="End"
-                        HorizontalTextAlignment="Start"
-                        FontSize="10"
-                        SemanticProperties.Description="Water detection label" />
-                </StackLayout>
+                        SemanticProperties.Description="Water detection number" />
+                   
+                </Grid>
             </Frame>
         </FlexLayout>
         <FlexLayout
             Grid.Column="0"    
             Grid.Row="0"
             Direction="Row"
-            Margin="33,32,0,0"
-            AlignItems="Stretch"
+            Margin="0,32,0,0"
+            AlignItems="Start"
+            JustifyContent="Center"
+            MinimumWidthRequest="170">
+            <Frame    
+                BackgroundColor="#D9D9D9"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="120"
+                SemanticProperties.Description="Round Detection icon">
+                <Image
+                    Source="water"
+                    Aspect="AspectFit"
+                    HeightRequest="40"
+                    WidthRequest="40"
+                    Margin="10"/>
+            </Frame>
+        </FlexLayout>
+        
+        <!-- Detection Count -->
+        <FlexLayout
+            Grid.Column="1"    
+            Grid.Row="0"
+            Direction="Row"
+            Margin="0,0,5,0"
+            AlignItems="Start"
+            JustifyContent="Center"
+            MinimumWidthRequest="170"
+            MinimumHeightRequest="190">
+            <Frame
+                Margin="5,10,2,0"
+                BackgroundColor="#666666"
+                Opacity="1"
+                MinimumWidthRequest="225"
+                MinimumHeightRequest="180"
+                CornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                         Grid.Row="1"
+                         Grid.ColumnSpan="2"
+                         Text="Su gato hoy ha sido detectado:"
+                         Style="{StaticResource SubHeadline}"
+                         SemanticProperties.HeadingLevel="Level2"
+                         FontAttributes="Bold"
+                         Margin="2,0,2,4"
+                         VerticalTextAlignment="End"
+                         HorizontalTextAlignment="Start"
+                         FontSize="9"
+                         SemanticProperties.Description="Water detection label" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        x:Name="detectVeces"
+                        Text="veces"
+                        Style="{StaticResource SubHeadline}"
+                        Margin="0,10,0,0"
+                        SemanticProperties.HeadingLevel="Level2"
+                        FontSize="16"
+                        SemanticProperties.Description="Water detection label" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontSize="25"  
+                        x:Name="detectCountLabel"
+                        Text="00"
+                        FontAttributes="Bold"
+                        Margin="0,0,0,0"
+                        Style="{StaticResource SubHeadline}"
+                        SemanticProperties.HeadingLevel="Level2"
+                        SemanticProperties.Description="Water detection number" />
+
+                </Grid>
+            </Frame>
+        </FlexLayout>
+        <FlexLayout
+            Grid.Column="1"    
+            Grid.Row="0"
+            Direction="Row"
+            Margin="0,32,0,0"
+            AlignItems="Start"
+            JustifyContent="Center"
             MinimumWidthRequest="170">
             <Frame                
                 BackgroundColor="#D9D9D9"
@@ -69,155 +181,130 @@
                 HeightRequest="60"
                 CornerRadius="120"
                 SemanticProperties.Description="Round Detection icon">
+                <Image
+                    Source="detection"
+                    Aspect="AspectFit"
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    Margin="10"/>
             </Frame>
-        </FlexLayout>
-        <FlexLayout
-            Grid.Column="0"    
-            Grid.Row="0"
-            Direction="Row"
-            JustifyContent="Center"
-            Margin="70,40,0,0"
-            AlignItems="Stretch"
-            MinimumWidthRequest="150">
-            <Label
-              FontSize="25"  
-              x:Name="waterCountLabel"
-              Text="00"
-              FontAttributes="Bold"
-              Style="{StaticResource SubHeadline}"
-              SemanticProperties.HeadingLevel="Level2"
-              SemanticProperties.Description="Water detection number" />
-        </FlexLayout>
-        <!-- Detection Count -->
-        <FlexLayout
-            Grid.Column="1"    
-            Grid.Row="0"
-            Direction="Row"
-            Margin="0"
-            AlignItems="Start"
-            MinimumWidthRequest="170">
-            <Frame
-                Margin="10"
-                BackgroundColor="#666666"
-                Opacity="1"
-                MinimumWidthRequest="220"
-                MinimumHeightRequest="114"
-                CornerRadius="8">
-                <StackLayout>
-                    <Label
-                      FontAttributes="Bold"
-                      x:Name="detectVeces"
-                      Text="veces"
-                      Style="{StaticResource SubHeadline}"
-                      Margin="70,32,0,0"
-                      VerticalTextAlignment="End"
-                      HorizontalTextAlignment="End"
-                      SemanticProperties.HeadingLevel="Level2"
-                      FontSize="16"
-                      SemanticProperties.Description="Water detection label" />
-                    <Label
-                        Text="Su gato hoy ha sido detectado:"
-                        Style="{StaticResource SubHeadline}"
-                        SemanticProperties.HeadingLevel="Level2"
-                        FontAttributes="Bold"
-                        Margin="10,5,20,0"
-                        VerticalTextAlignment="End"
-                        HorizontalTextAlignment="Start"
-                        FontSize="10"
-                        SemanticProperties.Description="Water detection label" />
-                </StackLayout>
-            </Frame>
-        </FlexLayout>
-        <FlexLayout
-            Grid.Column="1"    
-            Grid.Row="0"
-            Direction="Row"
-            Margin="33,32,0,0"
-            AlignItems="Stretch"
-            MinimumWidthRequest="170">
-             <Frame                
-                BackgroundColor="#D9D9D9"
-                WidthRequest="60"
-                HeightRequest="60"
-                CornerRadius="120"
-                SemanticProperties.Description="Round Detection icon">
-             </Frame>
-         </FlexLayout>
-         <FlexLayout
-            Grid.Column="1"    
-            Grid.Row="0"
-            Direction="Row"
-            JustifyContent="Center"
-            Margin="70,40,0,0"
-            AlignItems="Stretch"
-            MinimumWidthRequest="150">
-             <Label
-              FontSize="25"  
-              x:Name="detectCountLabel"
-              Text="00"
-              FontAttributes="Bold"
-              Style="{StaticResource SubHeadline}"
-              SemanticProperties.HeadingLevel="Level2"
-              SemanticProperties.Description="Water detection number" />
         </FlexLayout>
 
 
         <!-- Video Stream -->
         <FlexLayout 
             Grid.ColumnSpan="2"    
-            Grid.RowSpan="2"
             Grid.Row="1"
             Direction="Row"
             JustifyContent="SpaceEvenly"
-            Margin="70"
-            MinimumWidthRequest="470">
-                <WebView x:Name="videoWebView" WidthRequest="416" HeightRequest="312"/>
+            Margin="0,20,0,0">
+            
+            <Frame 
+                CornerRadius="15"
+                Scale="1"
+                Margin="5,0"
+                HeightRequest="240"
+                WidthRequest="320"
+                BackgroundColor="Black">
+                <Grid>
+                    <WebView 
+                        x:Name="videoWebView"    
+                        Navigating="OnWebViewNavigating"
+                        Navigated="OnWebViewNavigated"
+                        HorizontalOptions="FillAndExpand" 
+                        VerticalOptions="FillAndExpand"
+                        WidthRequest="320"
+                        HeightRequest="240"
+                        BackgroundColor="Black"/>
+                    <ActivityIndicator
+                        x:Name="activityIndicator"
+                        IsRunning="True"
+                        IsVisible="True"
+                        Color="#00AA00"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        Margin="0,0,0,0"/>
+                </Grid>
+            </Frame>
+            
         </FlexLayout>
         <!-- Mode Switch Icons -->
         <FlexLayout 
         Grid.ColumnSpan="2"    
-        Grid.Row="5"
+        Grid.Row="2"
         Direction="Row"
+         
         JustifyContent="SpaceEvenly"
-        Margin="0"
+        Margin="0,40,0,0"
         MinimumWidthRequest="470">
-            <Button
-                BackgroundColor="#AAAAAA"   
-                Opacity="0.6"
-                x:Name="modeOn"
-                WidthRequest="70"
-                HeightRequest="70"
-                CornerRadius="120"
-                SemanticProperties.Description="Round mode On icon"
-                Clicked="OnMode"
-                Text="On"
-                TextColor="White">
+            <StackLayout>
+                <Button
+                    BackgroundColor="#AAAAAA"   
+                    Opacity="1"
+                    x:Name="modeOn"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    CornerRadius="120"
+                    SemanticProperties.Description="Round mode On icon"
+                    Clicked="OnMode"
+                    ImageSource="on">
+                </Button>
+                <Label
+                    Text="Encendido"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="White"
+                    Margin="0,10,0,0"
+                    SemanticProperties.Description="Mode label" />
+            </StackLayout>
+            <StackLayout>
+                <Button
+                    BackgroundColor="#00AA00"   
+                    Opacity="1"
+                    x:Name="modeAuto"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    CornerRadius="120"
+                    SemanticProperties.Description="Round mode auto icon"
+                    Clicked="AutoMode"
+                    ImageSource="auto">
+                </Button>
+                <Label
+                    Text="Detección"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="White"
+                    Margin="0,10,0,0"
+                    SemanticProperties.Description="Mode label" />
+            </StackLayout>
+            <StackLayout>
+                <Button
+                    BackgroundColor="#AAAAAA"   
+                    Opacity="1"
+                    x:Name="modeOff"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    CornerRadius="120"
+                    SemanticProperties.Description="Round mode Off icon"
+                    Clicked="OffMode"
+                    ImageSource="off">
             </Button>
-            <Button
-                BackgroundColor="#20EE20"   
-                Opacity="0.6"
-                x:Name="modeAuto"
-                WidthRequest="70"
-                HeightRequest="70"
-                CornerRadius="120"
-                SemanticProperties.Description="Round mode auto icon"
-                Clicked="AutoMode"
-                Text="Auto"
-                TextColor="White">
-            </Button>
-            <Button
-                BackgroundColor="#AAAAAA"   
-                Opacity="0.6"
-                x:Name="modeOff"
-                WidthRequest="70"
-                HeightRequest="70"
-                CornerRadius="120"
-                SemanticProperties.Description="Round mode Off icon"
-                Clicked="OffMode"
-                Text="Off"
-                TextColor="White">
-            </Button>
+            <Label
+                    Text="Detección"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="White"
+                    Margin="0,10,0,0"
+                    SemanticProperties.Description="Mode label" />
+            </StackLayout>
         </FlexLayout>
+        
     </Grid>
 </ContentPage>
 

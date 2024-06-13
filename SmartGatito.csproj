@@ -79,7 +79,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FigmaSharp" Version="0.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -88,7 +87,7 @@
 		<PackageReference Include="MQTTnet.Extensions.ManagedClient" Version="4.3.6.1152" />
 		<PackageReference Include="MQTTnet.Extensions.Rpc" Version="4.3.6.1152" />
 		<PackageReference Include="MQTTnet.Extensions.WebSocket4Net" Version="4.3.6.1152" />
-		<PackageReference Include="Thingsboard.Net.Flurl" Version="3.5.1.5" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -108,6 +107,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\home.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Telemetry.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

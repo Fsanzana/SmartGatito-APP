@@ -4,12 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SmartGatito"
+    xmlns:Views="clr-namespace:SmartGatito.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="SmartGatito">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        
+            <ShellContent
+                Title="Inicio"
+                Icon="home"
+                ContentTemplate="{DataTemplate local:MainPage}"
+                Route="MainPage" />
+            <ShellContent 
+                Title="Telemetría" 
+                Icon="telemetry"
+                ContentTemplate="{DataTemplate Views:Telemetry}"/>
+    </TabBar>
+    
 
 </Shell>

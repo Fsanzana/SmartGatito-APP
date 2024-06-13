@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartGatito.Views.Telemetry">
+    <VerticalStackLayout Padding="20">
+        <Label Text="Logs" FontSize="Large"/>
+        <CollectionView ItemsSource="{Binding Logs}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Padding="5">
+                        <Label Text="{Binding Fecha}" WidthRequest="100"/>
+                        <Label Text="{Binding Mensaje}" WidthRequest="200"/>
+                        <Label Text="{Binding Nivel}" WidthRequest="100"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>
