@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
-using SmartGatito.Helpers;
+using Microcharts.Maui;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace SmartGatito
 {
@@ -14,6 +15,8 @@ namespace SmartGatito
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMicrocharts()
+                .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

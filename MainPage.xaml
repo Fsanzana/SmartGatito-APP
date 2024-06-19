@@ -84,7 +84,7 @@
             Grid.Column="0"    
             Grid.Row="0"
             Direction="Row"
-            Margin="0,32,0,0"
+            Margin="0,40,0,0"
             AlignItems="Start"
             JustifyContent="Center"
             MinimumWidthRequest="170">
@@ -173,7 +173,7 @@
             Grid.Column="1"    
             Grid.Row="0"
             Direction="Row"
-            Margin="0,32,0,0"
+            Margin="0,40,0,0"
             AlignItems="Start"
             JustifyContent="Center"
             MinimumWidthRequest="170">
@@ -222,13 +222,10 @@
                         BackgroundColor="Black"/>
                     <ActivityIndicator
                         x:Name="activityIndicator"
-                        IsRunning="True"
-                        IsVisible="True"
                         Color="#00AA00"
                         WidthRequest="50"
                         HeightRequest="50"
                         Margin="0,0,0,0"/>
-
                 </Grid>
             </Border>
             
@@ -243,17 +240,24 @@
         Margin="0,40,0,0"
         MinimumWidthRequest="470">
             <StackLayout>
-                <Button
-                    BackgroundColor="#AAAAAA"   
-                    Opacity="1"
-                    x:Name="modeOn"
+                <Border
+                    StrokeShape="RoundRectangle 45"
                     WidthRequest="70"
                     HeightRequest="70"
-                    CornerRadius="120"
-                    SemanticProperties.Description="Round mode On icon"
-                    Clicked="OnMode"
-                    ImageSource="on">
-                </Button>
+                    BackgroundColor="#AAAAAA"
+                    Stroke="#AAAAAA"
+                    x:Name="modeOn"
+                    SemanticProperties.Description="Round mode On button">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMode"/>
+                    </Border.GestureRecognizers>
+                    <Image
+                        Source="on.png"
+                        Aspect="AspectFit"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Margin="10"/>
+                </Border>
                 <Label
                     Text="Encendido"
                     FontSize="12"
@@ -265,17 +269,24 @@
                     SemanticProperties.Description="Mode label" />
             </StackLayout>
             <StackLayout>
-                <Button
-                    BackgroundColor="#00AA00"   
-                    Opacity="1"
-                    x:Name="modeAuto"
-                    WidthRequest="70"
-                    HeightRequest="70"
-                    CornerRadius="120"
-                    SemanticProperties.Description="Round mode auto icon"
-                    Clicked="AutoMode"
-                    ImageSource="auto">
-                </Button>
+                <Border
+                     StrokeShape="RoundRectangle 45"
+                     WidthRequest="70"
+                     HeightRequest="70"
+                     BackgroundColor="{StaticResource Primary}"
+                     Stroke="{StaticResource Primary}"
+                     x:Name="modeAuto"
+                     SemanticProperties.Description="Round mode auto button">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AutoMode"/>
+                    </Border.GestureRecognizers>
+                    <Image
+                         Source="auto.png"
+                         Aspect="AspectFit"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         Margin="10"/>
+                </Border>
                 <Label
                     Text="Detección"
                     FontSize="12"
@@ -287,18 +298,25 @@
                     SemanticProperties.Description="Mode label" />
             </StackLayout>
             <StackLayout>
-                <Button
-                    BackgroundColor="#AAAAAA"   
-                    Opacity="1"
-                    x:Name="modeOff"
+                <Border
+                    StrokeShape="RoundRectangle 45"
                     WidthRequest="70"
                     HeightRequest="70"
-                    CornerRadius="120"
-                    SemanticProperties.Description="Round mode Off icon"
-                    Clicked="OffMode"
-                    ImageSource="off">
-            </Button>
-            <Label
+                    BackgroundColor="#AAAAAA"
+                    Stroke="#AAAAAA"
+                    x:Name="modeOff"
+                    SemanticProperties.Description="Round mode off button">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OffMode"/>
+                    </Border.GestureRecognizers>
+                    <Image
+                        Source="off.png"
+                        Aspect="AspectFit"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        Margin="10"/>
+                </Border>
+                <Label
                     Text="Apagado"
                     FontSize="12"
                     FontAttributes="Bold"

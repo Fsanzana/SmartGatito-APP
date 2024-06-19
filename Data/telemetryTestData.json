@@ -1,0 +1,34 @@
+﻿[
+  {
+    "Time": "11:00",
+    "EventName": "Detección"
+  },
+  {
+    "Time": "11:30",
+    "EventName": "Detección"
+  },
+  {
+    "Time": "11:31",
+    "EventName": "Consumo"
+  },
+  {
+    "Time": "12:00",
+    "EventName": "Detección"
+  },
+  {
+    "Time": "12:00",
+    "EventName": "Consumo"
+  },
+  {
+    "Time": "12:50",
+    "EventName": "Detección"
+  },
+  {
+    "Time": "12:55",
+    "EventName": "Detección"
+  },
+  {
+    "Time": "12:55",
+    "EventName": "Consumo"
+  }
+]

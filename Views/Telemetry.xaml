@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="SmartGatito.Views.Telemetry">
-    <Grid ColumnDefinitions="*" RowDefinitions="20,auto"
+    <Grid ColumnDefinitions="*" RowDefinitions="20,*,*"
         Padding="20">
         <Border 
             HeightRequest="40" 
@@ -26,5 +27,17 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Border 
+            Grid.Row="2" 
+            Stroke="#f8f6f0" 
+            BackgroundColor="#f8f6f0" 
+            StrokeShape="RoundRectangle 10,10,10,10">
+            <Grid RowDefinitions="30,*" ColumnDefinitions="*">
+                <Label Text="Agua consumida por día" Margin="5" TextColor="Black" HorizontalTextAlignment="Center" Grid.Row="0"/>
+                <microcharts:ChartView x:Name="chartView" Grid.Row="1"/>
+            </Grid>
+            
+        </Border>
+        
     </Grid>
 </ContentPage>

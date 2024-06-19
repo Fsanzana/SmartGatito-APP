@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using SmartGatito.Helpers;
 using System.Net;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
@@ -26,6 +25,8 @@ namespace SmartGatito
         string deviceId = "";
         string mqttServer = "";
         int mqttPort = 0;
+        int waterCount = 0;
+        int detectCount = 0;
         string mqttClientId = "";
         string mqttUsername = "";
         string mqttPassword = "";
@@ -74,23 +75,32 @@ namespace SmartGatito
 
         private async void OnMode(object sender, EventArgs e)
         {
-            modeOn.BackgroundColor = Color.FromHex("#00AA00");
+            modeOn.BackgroundColor = Color.FromHex("#40E0D0");
             modeAuto.BackgroundColor = Color.FromHex("#AAAAAA");
             modeOff.BackgroundColor = Color.FromHex("#AAAAAA");
+            modeOn.Stroke = Color.FromHex("#40E0D0");
+            modeAuto.Stroke = Color.FromHex("#AAAAAA");
+            modeOff.Stroke = Color.FromHex("#AAAAAA");
             await setMode(1);
         }
         private async void AutoMode(object sender, EventArgs e)
         {
-            modeAuto.BackgroundColor = Color.FromHex("#00AA00");
+            modeAuto.BackgroundColor = Color.FromHex("#40E0D0");
             modeOn.BackgroundColor = Color.FromHex("#AAAAAA");
             modeOff.BackgroundColor = Color.FromHex("#AAAAAA");
+            modeAuto.Stroke = Color.FromHex("#40E0D0");
+            modeOn.Stroke = Color.FromHex("#AAAAAA");
+            modeOff.Stroke = Color.FromHex("#AAAAAA");
             await setMode(2);
         }
         private async void OffMode(object sender, EventArgs e)
         {
-            modeOff.BackgroundColor = Color.FromHex("#00AA00");
+            modeOff.BackgroundColor = Color.FromHex("#40E0D0");
             modeAuto.BackgroundColor = Color.FromHex("#AAAAAA");
             modeOn.BackgroundColor = Color.FromHex("#AAAAAA");
+            modeOff.Stroke = Color.FromHex("#40E0D0");
+            modeAuto.Stroke = Color.FromHex("#AAAAAA");
+            modeOn.Stroke = Color.FromHex("#AAAAAA");
             await setMode(3);
         }
 
@@ -169,14 +179,17 @@ namespace SmartGatito
                                 key = "detectado";
                                 message = message.Replace("{\"detectado\":", "");
                                 message = message.Replace("}", "");
+                                value = detectCount + Int32.Parse(message);
+                                detectCount = value;
                             }
                             else
                             {
                                 key = "agua";
                                 message = message.Replace("{\"agua\":", "");
                                 message = message.Replace("}", "");
+                                value = waterCount + Int32.Parse(message);
+                                waterCount = value;
                             }
-                            value = value + Int32.Parse(message);
                             string veceslabel = "";
                             string countLabel = "";
                             if (value != 1)
@@ -250,6 +263,7 @@ namespace SmartGatito
                 string responseString = await response.Content.ReadAsStringAsync();
                 var jwt = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseString);
                 token = jwt["token"];
+                Console.WriteLine(token);
             }
             catch(Exception e)
             {
