@@ -60,7 +60,7 @@ namespace SmartGatito
             mqttListener.Start();
             mqttListener.Join();
             loadVideoStream = new Thread(LoadVideoStream);
-            loadVideoStream.Start();            
+            loadVideoStream.Start();
         }
 
         protected override void OnDisappearing()

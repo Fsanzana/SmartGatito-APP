@@ -30,7 +30,8 @@
                 Opacity="1"
                 MinimumWidthRequest="225"
                 MinimumHeightRequest="180"
-                CornerRadius="8">
+                CornerRadius="8"
+                Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -118,7 +119,8 @@
                 Opacity="1"
                 MinimumWidthRequest="225"
                 MinimumHeightRequest="180"
-                CornerRadius="8">
+                CornerRadius="8"
+                Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -198,14 +200,16 @@
             Direction="Row"
             JustifyContent="SpaceEvenly"
             Margin="0,20,0,0">
-            
-            <Frame 
-                CornerRadius="15"
+
+            <Border 
                 Scale="1"
-                Margin="5,0"
+                Stroke="Black"
+                StrokeThickness="0"
+                Background="black"
+                StrokeShape="RoundRectangle 10,10,10,10"
                 HeightRequest="240"
                 WidthRequest="320"
-                BackgroundColor="Black">
+                Padding="0">
                 <Grid>
                     <WebView 
                         x:Name="videoWebView"    
@@ -224,8 +228,9 @@
                         WidthRequest="50"
                         HeightRequest="50"
                         Margin="0,0,0,0"/>
+
                 </Grid>
-            </Frame>
+            </Border>
             
         </FlexLayout>
         <!-- Mode Switch Icons -->
@@ -294,7 +299,7 @@
                     ImageSource="off">
             </Button>
             <Label
-                    Text="Detección"
+                    Text="Apagado"
                     FontSize="12"
                     FontAttributes="Bold"
                     HorizontalTextAlignment="Center"

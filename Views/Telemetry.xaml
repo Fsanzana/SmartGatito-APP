@@ -2,18 +2,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartGatito.Views.Telemetry">
-    <VerticalStackLayout Padding="20">
-        <Label Text="Logs" FontSize="Large"/>
-        <CollectionView ItemsSource="{Binding Logs}">
-            <CollectionView.ItemTemplate>
+    <Grid ColumnDefinitions="*" RowDefinitions="20,auto"
+        Padding="20">
+        <Border 
+            HeightRequest="40" 
+            Stroke="#777777" 
+            BackgroundColor="#777777" 
+            StrokeShape="RoundRectangle 4,4,4,4">
+            <FlexLayout AlignItems="Center" JustifyContent="SpaceBetween" Grid.Row="0">
+                <Label Text="Hora" Margin="5"/>
+                <Label Text="Evento" Margin="9,0"/>
+            </FlexLayout>
+        </Border>
+        <ListView x:Name="miListView" Grid.Row="1" Margin="0,10">
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Horizontal" Padding="5">
-                        <Label Text="{Binding Fecha}" WidthRequest="100"/>
-                        <Label Text="{Binding Mensaje}" WidthRequest="200"/>
-                        <Label Text="{Binding Nivel}" WidthRequest="100"/>
-                    </StackLayout>
+                    <ViewCell>
+                        <FlexLayout AlignItems="Center" JustifyContent="SpaceBetween">
+                            <Label Text="{Binding Time}" Margin="5"/>
+                            <Label Text="{Binding EventName}" Margin="5"/>
+                        </FlexLayout>
+                    </ViewCell>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </ContentPage>
