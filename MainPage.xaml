@@ -34,45 +34,40 @@
                 Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="32" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label
                          Grid.Row="1"
-                         Grid.ColumnSpan="2"
                          Text="Su gato hoy ha tomado agua:"
                          Style="{StaticResource SubHeadline}"
                          SemanticProperties.HeadingLevel="Level2"
                          FontAttributes="Bold"
-                         Margin="2,0,2,4"
+                         Margin="2,10,2,0"
                          VerticalTextAlignment="End"
                          HorizontalTextAlignment="Start"
                          FontSize="9"
                          SemanticProperties.Description="Water detection label" />
                     <Label
-                        Grid.Row="2"
-                        Grid.Column="1"
+                        Grid.Row="3"
                         FontAttributes="Bold"
                         x:Name="waterVeces"
                         Text="veces"
                         Style="{StaticResource SubHeadline}"
-                        Margin="0,10,0,0"
                         SemanticProperties.HeadingLevel="Level2"
                         FontSize="16"
                         SemanticProperties.Description="Water detection label" />
                     <Label
                         Grid.Row="2"
-                        Grid.Column="0"
                         FontSize="25"  
                         x:Name="waterCountLabel"
                         Text="00"
                         FontAttributes="Bold"
-                        Margin="0,0,0,0"
                         Style="{StaticResource SubHeadline}"
                         SemanticProperties.HeadingLevel="Level2"
                         SemanticProperties.Description="Water detection number" />
@@ -89,7 +84,7 @@
             JustifyContent="Center"
             MinimumWidthRequest="170">
             <Frame    
-                BackgroundColor="#D9D9D9"
+                BackgroundColor="#7DF9FF"
                 WidthRequest="60"
                 HeightRequest="60"
                 CornerRadius="120"
@@ -123,45 +118,40 @@
                 Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="32" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label
                          Grid.Row="1"
-                         Grid.ColumnSpan="2"
                          Text="Su gato hoy ha sido detectado:"
                          Style="{StaticResource SubHeadline}"
                          SemanticProperties.HeadingLevel="Level2"
                          FontAttributes="Bold"
-                         Margin="2,0,2,4"
+                         Margin="2,10,2,0"
                          VerticalTextAlignment="End"
                          HorizontalTextAlignment="Start"
                          FontSize="9"
                          SemanticProperties.Description="Water detection label" />
                     <Label
-                        Grid.Row="2"
-                        Grid.Column="1"
+                        Grid.Row="3"
                         FontAttributes="Bold"
                         x:Name="detectVeces"
                         Text="veces"
                         Style="{StaticResource SubHeadline}"
-                        Margin="0,10,0,0"
                         SemanticProperties.HeadingLevel="Level2"
                         FontSize="16"
                         SemanticProperties.Description="Water detection label" />
                     <Label
                         Grid.Row="2"
-                        Grid.Column="0"
                         FontSize="25"  
                         x:Name="detectCountLabel"
                         Text="00"
                         FontAttributes="Bold"
-                        Margin="0,0,0,0"
                         Style="{StaticResource SubHeadline}"
                         SemanticProperties.HeadingLevel="Level2"
                         SemanticProperties.Description="Water detection number" />
@@ -178,7 +168,7 @@
             JustifyContent="Center"
             MinimumWidthRequest="170">
             <Frame                
-                BackgroundColor="#D9D9D9"
+                BackgroundColor="#FFC000"
                 WidthRequest="60"
                 HeightRequest="60"
                 CornerRadius="120"
@@ -273,8 +263,8 @@
                      StrokeShape="RoundRectangle 45"
                      WidthRequest="70"
                      HeightRequest="70"
-                     BackgroundColor="{StaticResource Primary}"
-                     Stroke="{StaticResource Primary}"
+                     BackgroundColor="#3c53d7"
+                     Stroke="#3c53d7"
                      x:Name="modeAuto"
                      SemanticProperties.Description="Round mode auto button">
                     <Border.GestureRecognizers>

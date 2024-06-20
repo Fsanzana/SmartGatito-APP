@@ -14,7 +14,7 @@
                 Title="Inicio"
                 Icon="home"
                 ContentTemplate="{DataTemplate local:MainPage}"
-                Route="MainPage" />
+                Route="MainPage"/>
             <ShellContent 
                 Title="Telemetría" 
                 Icon="telemetry"

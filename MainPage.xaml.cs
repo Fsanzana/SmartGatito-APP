@@ -75,30 +75,30 @@ namespace SmartGatito
 
         private async void OnMode(object sender, EventArgs e)
         {
-            modeOn.BackgroundColor = Color.FromHex("#40E0D0");
+            modeOn.BackgroundColor = Color.FromHex("#4ade3a");
             modeAuto.BackgroundColor = Color.FromHex("#AAAAAA");
             modeOff.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeOn.Stroke = Color.FromHex("#40E0D0");
+            modeOn.Stroke = Color.FromHex("#4ade3a");
             modeAuto.Stroke = Color.FromHex("#AAAAAA");
             modeOff.Stroke = Color.FromHex("#AAAAAA");
             await setMode(1);
         }
         private async void AutoMode(object sender, EventArgs e)
         {
-            modeAuto.BackgroundColor = Color.FromHex("#40E0D0");
+            modeAuto.BackgroundColor = Color.FromHex("#3c53d7");
             modeOn.BackgroundColor = Color.FromHex("#AAAAAA");
             modeOff.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeAuto.Stroke = Color.FromHex("#40E0D0");
+            modeAuto.Stroke = Color.FromHex("#3c53d7");
             modeOn.Stroke = Color.FromHex("#AAAAAA");
             modeOff.Stroke = Color.FromHex("#AAAAAA");
             await setMode(2);
         }
         private async void OffMode(object sender, EventArgs e)
         {
-            modeOff.BackgroundColor = Color.FromHex("#40E0D0");
+            modeOff.BackgroundColor = Color.FromHex("#EE4B2B");
             modeAuto.BackgroundColor = Color.FromHex("#AAAAAA");
             modeOn.BackgroundColor = Color.FromHex("#AAAAAA");
-            modeOff.Stroke = Color.FromHex("#40E0D0");
+            modeOff.Stroke = Color.FromHex("#EE4B2B");
             modeAuto.Stroke = Color.FromHex("#AAAAAA");
             modeOn.Stroke = Color.FromHex("#AAAAAA");
             await setMode(3);
